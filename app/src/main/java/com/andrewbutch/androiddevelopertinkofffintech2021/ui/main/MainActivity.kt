@@ -1,9 +1,9 @@
-package com.andrewbutch.androiddevelopertinkofffintech2021
+package com.andrewbutch.androiddevelopertinkofffintech2021.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.andrewbutch.androiddevelopertinkofffintech2021.ui.main.SectionsPagerAdapter
+import com.andrewbutch.androiddevelopertinkofffintech2021.R
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
