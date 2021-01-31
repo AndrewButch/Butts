@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andrewbutch.androiddevelopertinkofffintech2021.model.Post
+import com.andrewbutch.utils.Resource
 import kotlin.math.max
 
 abstract class BaseViewModel : ViewModel() {
@@ -47,6 +48,23 @@ abstract class BaseViewModel : ViewModel() {
         val currentPage = _page.value
         currentPage?.let {
             _page.value = max(0, it - 1)
+        }
+    }
+
+    fun handleResult(result: Resource<Post>) {
+        when (result.status) {
+            Resource.Status.SUCCESS -> {
+                result.data?.let {
+                    setPost(it)
+                    setLoading(false)
+                }
+            }
+            Resource.Status.LOADING -> setLoading(true)
+            Resource.Status.ERROR -> {
+                result.message?.let {
+                    setError(it)
+                }
+            }
         }
     }
 

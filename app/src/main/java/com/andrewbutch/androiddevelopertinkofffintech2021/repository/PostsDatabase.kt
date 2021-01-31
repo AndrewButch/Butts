@@ -6,11 +6,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.andrewbutch.androiddevelopertinkofffintech2021.repository.latest.LatestPostCacheEntity
 import com.andrewbutch.androiddevelopertinkofffintech2021.repository.latest.LatestPostDao
+import com.andrewbutch.androiddevelopertinkofffintech2021.repository.top.TopPostCacheEntity
+import com.andrewbutch.androiddevelopertinkofffintech2021.repository.top.TopPostDao
 
-@Database(entities = [LatestPostCacheEntity::class], version = 1, exportSchema = false)
-abstract class PostsDatabase: RoomDatabase() {
+@Database(
+    entities = [LatestPostCacheEntity::class, TopPostCacheEntity::class],
+    version = 1,
+    exportSchema = false
+)
+abstract class PostsDatabase : RoomDatabase() {
 
     abstract fun latestPostsDao(): LatestPostDao
+    abstract fun topPostsDao(): TopPostDao
 
     companion object {
         private var INSTANCE: PostsDatabase? = null

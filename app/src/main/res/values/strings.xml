@@ -2,7 +2,6 @@
     <string name="app_name">Developers Life</string>
     <string name="tab_text_1">Последние</string>
     <string name="tab_text_2">Лучшие</string>
-    <string name="tab_text_3">Горячее</string>
     <string name="network_error_text">Произошла ошибка во время получения данных. Проверьте подключение к сети.</string>
     <string name="retry_btn">Повторить</string>
 </resources>
