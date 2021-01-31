@@ -3,7 +3,7 @@ package com.andrewbutch.androiddevelopertinkofffintech2021.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andrewbutch.androiddevelopertinkofffintech2021.api.NetworkPost
+import com.andrewbutch.androiddevelopertinkofffintech2021.model.Post
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.max
@@ -16,29 +16,23 @@ abstract class BaseViewModel : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    private val _post = MutableLiveData<NetworkPost>()
-    val post: LiveData<NetworkPost> = _post
+    private val _post = MutableLiveData<Post>()
+    val post: LiveData<Post> = _post
 
     private val _page = MutableLiveData<Int>(0)
     val page: LiveData<Int> = _page
 
 
-    protected suspend fun setLoading(isLoading: Boolean) {
-        withContext(Dispatchers.Main) {
-            _isLoading.value = isLoading
-        }
+    protected fun setLoading(isLoading: Boolean) {
+        _isLoading.value = isLoading
     }
 
-    protected suspend fun setPost(post: NetworkPost) {
-        withContext(Dispatchers.Main) {
-            _post.value = post
-        }
+    protected fun setPost(post: Post) {
+        _post.value = post
     }
 
-    protected suspend fun setError(msg: String) {
-        withContext(Dispatchers.Main) {
-            _error.value = msg
-        }
+    protected fun setError(msg: String) {
+        _error.value = msg
     }
 
     protected suspend fun increasePage() {

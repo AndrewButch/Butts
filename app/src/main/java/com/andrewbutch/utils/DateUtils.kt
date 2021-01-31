@@ -1,4 +1,4 @@
-package com.andrewbutch.androiddevelopertinkofffintech2021
+package com.andrewbutch.utils
 
 import android.util.Log
 import java.text.ParseException

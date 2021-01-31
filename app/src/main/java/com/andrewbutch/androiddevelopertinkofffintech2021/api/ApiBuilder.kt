@@ -1,6 +1,6 @@
 package com.andrewbutch.androiddevelopertinkofffintech2021.api
 
-import com.andrewbutch.androiddevelopertinkofffintech2021.Constants.BASE_URL
+import com.andrewbutch.utils.Constants.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -1,21 +1,32 @@
 package com.andrewbutch.androiddevelopertinkofffintech2021.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.andrewbutch.androiddevelopertinkofffintech2021.BaseApplication
 import com.andrewbutch.androiddevelopertinkofffintech2021.R
+import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_main.*
 
-abstract class BaseFragment(val requestManager: RequestManager) : Fragment() {
+abstract class BaseFragment() : Fragment() {
 
-    protected var cornerRadius: Int = 5
+    private var cornerRadius: Int = 5
     protected lateinit var viewModel: BaseViewModel
+    private lateinit var requestManager: RequestManager
+    protected lateinit var viewModelFactory: ViewModelFactory
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestManager = initGlide()
+    }
 
     protected fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
@@ -23,6 +34,11 @@ abstract class BaseFragment(val requestManager: RequestManager) : Fragment() {
 
     protected fun hideProgressBar() {
         progressBar.visibility = View.GONE
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModelFactory = (requireActivity().application as BaseApplication).getViewModelFactory()
     }
 
     override fun onCreateView(
@@ -48,7 +64,7 @@ abstract class BaseFragment(val requestManager: RequestManager) : Fragment() {
         viewModel.post.observe(viewLifecycleOwner) { post ->
             description.text = post.description
             requestManager
-                .load(post.gifURL)
+                .load(post.gifUrl)
                 .transform(RoundedCorners(cornerRadius))
                 .into(postContainer)
         }
@@ -96,6 +112,13 @@ abstract class BaseFragment(val requestManager: RequestManager) : Fragment() {
             isClickable = true
             isEnabled = true
         }
+    }
+
+    private fun initGlide(): RequestManager {
+        val options = RequestOptions()
+            .error(R.drawable.ic_outline_compare_arrows_24)
+        return Glide.with(requireActivity())
+            .setDefaultRequestOptions(options)
     }
 
 }

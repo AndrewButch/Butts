@@ -1,4 +1,4 @@
-package com.andrewbutch.androiddevelopertinkofffintech2021
+package com.andrewbutch.utils
 
 object Constants {
     const val BASE_URL = "https://developerslife.ru/"

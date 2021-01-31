@@ -1,4 +1,4 @@
-package com.andrewbutch.androiddevelopertinkofffintech2021
+package com.andrewbutch.utils
 
 sealed class Resource<T>(
     val status: Status,
