@@ -10,11 +10,11 @@
         android:id="@+id/postContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
         android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@id/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/description"
         tools:src="@drawable/ic_launcher_background" />
 
     <TextView
@@ -26,13 +26,13 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textColor="#fff"
-        app:layout_constraintBottom_toTopOf="@id/btn_prev"
+        app:layout_constraintBottom_toTopOf="@id/btnNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Post description" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_prev"
+        android:id="@+id/btnPrev"
         android:layout_width="@dimen/button_size"
         android:layout_height="@dimen/button_size"
         android:layout_marginEnd="32dp"
@@ -41,21 +41,21 @@
         android:elevation="4dp"
         android:src="@drawable/btn_prev_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_next"
+        app:layout_constraintEnd_toStartOf="@id/btnNext"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_next"
+        android:id="@+id/btnNext"
         android:layout_width="@dimen/button_size"
         android:layout_height="@dimen/button_size"
         android:background="@drawable/circle_shape"
         android:elevation="4dp"
         android:src="@drawable/ic_arrow_forward_24"
-        app:layout_constraintBottom_toBottomOf="@id/btn_prev"
+        app:layout_constraintBottom_toBottomOf="@id/btnPrev"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_prev"
-        app:layout_constraintTop_toTopOf="@+id/btn_prev" />
+        app:layout_constraintStart_toEndOf="@+id/btnPrev"
+        app:layout_constraintTop_toTopOf="@+id/btnPrev" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -64,9 +64,22 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/connectionError"
+        layout="@layout/layout_connection_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

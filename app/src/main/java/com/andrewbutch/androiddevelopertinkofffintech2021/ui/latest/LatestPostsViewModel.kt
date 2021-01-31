@@ -12,16 +12,11 @@ import kotlinx.coroutines.withContext
 
 class LatestPostsViewModel(private val postsRepository: PostsRepository) : BaseViewModel() {
     override fun getNextPost() {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            postsRepository.getNextPost().collect {
-//                handleResult(it)
-//            }
-//        }
+        increasePage()
         val source = postsRepository.getNextPost()
         source.onEach {
             withContext(Dispatchers.Main) {
                 handleResult(it)
-                increasePage()
             }
         }.launchIn(CoroutineScope(Dispatchers.IO))
     }
@@ -34,7 +29,7 @@ class LatestPostsViewModel(private val postsRepository: PostsRepository) : BaseV
                     setLoading(false)
                 }
             }
-            Resource.Status.LOADING -> setLoading(false)
+            Resource.Status.LOADING -> setLoading(true)
             Resource.Status.ERROR -> {
                 result.message?.let {
                     setError(it)
@@ -43,42 +38,23 @@ class LatestPostsViewModel(private val postsRepository: PostsRepository) : BaseV
         }
     }
 
-//    override fun getNextPost() {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            setLoading(true)
-//            val rawResponse = ApiBuilder.getService().randomPost().awaitResponse()
-//            val apiResponse = ApiResponse.create(rawResponse)
-//            when (apiResponse) {
-//                is ApiSuccessResponse -> {
-//                    // get data from ApiResponse
-//                    val networkPost = apiResponse.body
-//                    // save data into local database
-//
-//                    // get updated data from database
-//
-//                    // return success
-//                    setPost(networkPost)
-//                }
-//                is ApiEmptyResponse -> {
-//                }
-//                is ApiErrorResponse -> {
-//                    setError(apiResponse.errorMessage)
-//                }
-//            }
-//            setLoading(false)
-//            increasePage()
-//        }
-//
-//    }
-
     override fun getPreviousPost() {
+        decreasePage()
+        val source = postsRepository.getPreviousPost()
+        source.onEach {
+            withContext(Dispatchers.Main) {
+                handleResult(it)
+            }
+        }.launchIn(CoroutineScope(Dispatchers.IO))
+
+    }
+
+    override fun retry() {
         val source = postsRepository.getNextPost()
         source.onEach {
             withContext(Dispatchers.Main) {
                 handleResult(it)
-                decreasePage()
             }
         }.launchIn(CoroutineScope(Dispatchers.IO))
-
     }
 }

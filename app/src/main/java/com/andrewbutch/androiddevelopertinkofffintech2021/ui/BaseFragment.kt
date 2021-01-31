@@ -1,6 +1,7 @@
 package com.andrewbutch.androiddevelopertinkofffintech2021.ui
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +12,16 @@ import com.andrewbutch.androiddevelopertinkofffintech2021.BaseApplication
 import com.andrewbutch.androiddevelopertinkofffintech2021.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.layout_connection_error.*
 
 abstract class BaseFragment() : Fragment() {
 
-    private var cornerRadius: Int = 5
     protected lateinit var viewModel: BaseViewModel
     private lateinit var requestManager: RequestManager
     protected lateinit var viewModelFactory: ViewModelFactory
@@ -50,6 +54,19 @@ abstract class BaseFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState == null) {
+            viewModel.getNextPost()
+        }
+        btnNext.setOnClickListener {
+            viewModel.getNextPost()
+        }
+        btnPrev.setOnClickListener {
+            viewModel.getPreviousPost()
+        }
+
+        retryBtn.setOnClickListener {
+            viewModel.retry()
+        }
         subscribeObservers()
     }
 
@@ -65,8 +82,31 @@ abstract class BaseFragment() : Fragment() {
             description.text = post.description
             requestManager
                 .load(post.gifUrl)
-                .transform(RoundedCorners(cornerRadius))
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        hideProgressBar()
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        hideProgressBar()
+                        return false
+                    }
+
+                })
                 .into(postContainer)
+            hideErrorConnection()
         }
     }
 
@@ -74,30 +114,32 @@ abstract class BaseFragment() : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 showProgressBar()
-            } else {
-                hideProgressBar()
             }
         }
     }
 
     private fun subscribeError() {
         viewModel.error.observe(viewLifecycleOwner) { error ->
-            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+            if (error.contains("Unable to resolve")) {
+                showErrorConnection()
+            } else {
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private fun subscribePage() {
         viewModel.page.observe(viewLifecycleOwner) { page ->
-            if (page <= 1) {
-                disablePreviousButton()
-            } else {
+            if (page > 0) {
                 enablePreviousButton()
+            } else {
+                disablePreviousButton()
             }
         }
     }
 
     private fun disablePreviousButton() {
-        btn_prev.apply {
+        btnPrev.apply {
             setOnClickListener(null)
             isClickable = false
             isEnabled = false
@@ -105,7 +147,7 @@ abstract class BaseFragment() : Fragment() {
     }
 
     private fun enablePreviousButton() {
-        btn_prev.apply {
+        btnPrev.apply {
             setOnClickListener {
                 viewModel.getPreviousPost()
             }
@@ -119,6 +161,14 @@ abstract class BaseFragment() : Fragment() {
             .error(R.drawable.ic_outline_compare_arrows_24)
         return Glide.with(requireActivity())
             .setDefaultRequestOptions(options)
+    }
+
+    private fun showErrorConnection() {
+        connectionError.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorConnection() {
+        connectionError.visibility = View.GONE
     }
 
 }

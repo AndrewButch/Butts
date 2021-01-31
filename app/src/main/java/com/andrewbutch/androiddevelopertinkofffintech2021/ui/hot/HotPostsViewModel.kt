@@ -5,10 +5,14 @@ import com.andrewbutch.androiddevelopertinkofffintech2021.ui.BaseViewModel
 
 class HotPostsViewModel(postsRepository: PostsRepository) : BaseViewModel() {
     override fun getNextPost() {
-        TODO("Not yet implemented")
+        // TODO
     }
 
     override fun getPreviousPost() {
-        TODO("Not yet implemented")
+        // TODO
+    }
+
+    override fun retry() {
+        // TODO
     }
 }

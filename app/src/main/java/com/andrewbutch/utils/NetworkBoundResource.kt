@@ -60,18 +60,14 @@ abstract class NetworkBoundResource<ResultType, RequestObject> {
 
     }
 
+    protected fun emitError(msg: String) {
+
+    }
 
     @WorkerThread
     private fun extractDataFromNetworkResponse(response: ApiSuccessResponse<ResultType>): ResultType {
         return response.body
     }
-
-//    @MainThread
-//    private fun setValue(newValue: Resource<ResultType>) {
-//        if (result.value != newValue) {
-//            result.value = newValue
-//        }
-//    }
 
     // Called to save the result of the API response into the database
     @WorkerThread
@@ -89,10 +85,6 @@ abstract class NetworkBoundResource<ResultType, RequestObject> {
     // Called to create the API call.
     @MainThread
     protected abstract fun createCall(): ApiResponse<RequestObject>
-
-    // Called when the fetch fails. The child class may want to reset components
-    // like rate limiter.
-    protected open fun onFetchFailed() {}
 
     // Returns a LiveData object that represents the resource that's implemented
     // in the base class.

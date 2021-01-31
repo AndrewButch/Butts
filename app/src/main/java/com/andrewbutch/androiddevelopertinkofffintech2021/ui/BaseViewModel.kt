@@ -1,14 +1,14 @@
 package com.andrewbutch.androiddevelopertinkofffintech2021.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andrewbutch.androiddevelopertinkofffintech2021.model.Post
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlin.math.max
 
 abstract class BaseViewModel : ViewModel() {
+    private val TAG = "BaseViewModel"
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -19,11 +19,12 @@ abstract class BaseViewModel : ViewModel() {
     private val _post = MutableLiveData<Post>()
     val post: LiveData<Post> = _post
 
-    private val _page = MutableLiveData<Int>(0)
+    private val _page = MutableLiveData<Int>(-1)
     val page: LiveData<Int> = _page
 
 
     protected fun setLoading(isLoading: Boolean) {
+        Log.d(TAG, "setLoading: $isLoading")
         _isLoading.value = isLoading
     }
 
@@ -35,25 +36,24 @@ abstract class BaseViewModel : ViewModel() {
         _error.value = msg
     }
 
-    protected suspend fun increasePage() {
-        withContext(Dispatchers.Main) {
-            val currentPage = _page.value
-            currentPage?.let {
-                _page.value = it + 1
-            }
+    protected fun increasePage() {
+        val currentPage = _page.value
+        currentPage?.let {
+            _page.value = it + 1
         }
     }
 
-    protected suspend fun decreasePage() {
-        withContext(Dispatchers.Main) {
-            val currentPage = _page.value
-            currentPage?.let {
-                _page.value = max(0, it - 1)
-            }
+    protected fun decreasePage() {
+        val currentPage = _page.value
+        currentPage?.let {
+            _page.value = max(0, it - 1)
         }
     }
 
     abstract fun getNextPost()
 
     abstract fun getPreviousPost()
+
+    abstract fun retry()
+
 }

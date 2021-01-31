@@ -1,5 +1,7 @@
 package com.andrewbutch.androiddevelopertinkofffintech2021.api
 
+import com.andrewbutch.androiddevelopertinkofffintech2021.api.response.ApiResult
+import com.andrewbutch.androiddevelopertinkofffintech2021.api.response.NetworkPost
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
