@@ -1,6 +1,6 @@
 package com.andrewbutch.androiddevelopertinkofffintech2021.api
 
-import com.andrewbutch.utils.Constants.NETWORK_ERROR_UNKNOWN
+import com.andrewbutch.androiddevelopertinkofffintech2021.utils.Constants.NETWORK_ERROR_UNKNOWN
 import retrofit2.Response
 
 // Code from Google samples

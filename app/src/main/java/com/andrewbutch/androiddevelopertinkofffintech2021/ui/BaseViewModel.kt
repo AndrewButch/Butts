@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andrewbutch.androiddevelopertinkofffintech2021.model.Post
-import com.andrewbutch.utils.Resource
+import com.andrewbutch.androiddevelopertinkofffintech2021.utils.Resource
 import kotlin.math.max
 
 abstract class BaseViewModel : ViewModel() {

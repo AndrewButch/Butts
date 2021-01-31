@@ -2,7 +2,7 @@ package com.andrewbutch.androiddevelopertinkofffintech2021.repository.latest
 
 import com.andrewbutch.androiddevelopertinkofffintech2021.api.response.NetworkPost
 import com.andrewbutch.androiddevelopertinkofffintech2021.model.Post
-import com.andrewbutch.utils.DateUtils
+import com.andrewbutch.androiddevelopertinkofffintech2021.utils.DateUtils
 
 object LatestPostMapper {
 

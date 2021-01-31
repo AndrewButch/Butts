@@ -1,4 +1,4 @@
-package com.andrewbutch.utils
+package com.andrewbutch.androiddevelopertinkofffintech2021.utils
 
 import android.util.Log
 import androidx.annotation.MainThread
@@ -57,10 +57,6 @@ abstract class NetworkBoundResource<ResultType, RequestObject> {
                 return Resource.Error(apiResponse.errorMessage)
             }
         }
-
-    }
-
-    protected fun emitError(msg: String) {
 
     }
 

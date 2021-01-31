@@ -9,7 +9,7 @@ import com.andrewbutch.androiddevelopertinkofffintech2021.repository.latest.Late
 import com.andrewbutch.androiddevelopertinkofffintech2021.repository.latest.LatestPostMapper
 import com.andrewbutch.androiddevelopertinkofffintech2021.repository.top.TopPostDao
 import com.andrewbutch.androiddevelopertinkofffintech2021.repository.top.TopPostsMapper
-import com.andrewbutch.utils.NetworkBoundResource
+import com.andrewbutch.androiddevelopertinkofffintech2021.utils.NetworkBoundResource
 import retrofit2.Response
 import kotlin.math.max
 import kotlin.math.min
