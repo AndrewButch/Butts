@@ -15,8 +15,7 @@ class LatestPostsFragment(
     private val viewModelProvider: ViewModelFactory,
     requestManager: RequestManager
 ) : BaseFragment(requestManager) {
-    private val TAG = "LatestPostsFragment"
-    private lateinit var viewModel: LatestPostsViewModel
+    private val TAG = LatestPostsFragment::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,16 +27,16 @@ class LatestPostsFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getRandomPost()
+        viewModel.getNextPost()
 
         btn_next.setOnClickListener {
-            viewModel.getRandomPost()
+            viewModel.getNextPost()
         }
     }
 
     override fun subscribeObservers() {
         viewModel.post.observe(viewLifecycleOwner) { post ->
-            Log.d(TAG, "onViewCreated: id = ${post.id} url = ${post.gifURL}")
+            Log.d(TAG, "LatestPost: id = ${post.id} url = ${post.gifURL}")
             description.text = post.description
             requestManager
                 .load(post.gifURL)

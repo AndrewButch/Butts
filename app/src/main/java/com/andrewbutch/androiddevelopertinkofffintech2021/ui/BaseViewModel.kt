@@ -7,7 +7,7 @@ import com.andrewbutch.androiddevelopertinkofffintech2021.api.NetworkPost
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-open class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -18,7 +18,6 @@ open class BaseViewModel : ViewModel() {
     private val _post = MutableLiveData<NetworkPost>()
     val post: LiveData<NetworkPost> = _post
 
-    private val currentPage: Int = 0
 
     protected suspend fun setLoading(isLoading: Boolean) {
         withContext(Dispatchers.Main) {
@@ -37,4 +36,8 @@ open class BaseViewModel : ViewModel() {
             _error.value = msg
         }
     }
+
+    abstract fun getNextPost()
+
+    abstract fun getPreviousPost()
 }

@@ -1,17 +1,20 @@
 package com.andrewbutch.androiddevelopertinkofffintech2021.ui.top
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.andrewbutch.androiddevelopertinkofffintech2021.ViewModelFactory
 import com.andrewbutch.androiddevelopertinkofffintech2021.ui.BaseFragment
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import kotlinx.android.synthetic.main.fragment_main.*
 
 class TopPostsFragment(
     private val viewModelProvider: ViewModelFactory,
     requestManager: RequestManager
 ) : BaseFragment(requestManager) {
-
-    private lateinit var viewModel: TopPostsViewModel
+    private val TAG = TopPostsFragment::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +24,25 @@ class TopPostsFragment(
     }
 
     override fun subscribeObservers() {
-        // TODO
+        viewModel.post.observe(viewLifecycleOwner) { post ->
+            Log.d(TAG, "TopPost: id = ${post.id} url = ${post.gifURL}")
+            description.text = post.description
+            requestManager
+                .load(post.gifURL)
+                .transform(RoundedCorners(cornerRadius))
+                .into(postContainer)
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                showProgressBar()
+            } else {
+                hideProgressBar()
+            }
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+        }
     }
 }

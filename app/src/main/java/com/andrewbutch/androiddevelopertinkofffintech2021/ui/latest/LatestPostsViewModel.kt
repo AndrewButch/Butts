@@ -9,7 +9,7 @@ import retrofit2.awaitResponse
 
 class LatestPostsViewModel : BaseViewModel() {
 
-    fun getRandomPost() {
+    override fun getNextPost() {
         CoroutineScope(Dispatchers.IO).launch {
             setLoading(true)
             val rawResponse = ApiBuilder.getService().randomPost().awaitResponse()
@@ -34,5 +34,9 @@ class LatestPostsViewModel : BaseViewModel() {
             setLoading(false)
         }
 
+    }
+
+    override fun getPreviousPost() {
+        TODO("Not yet implemented")
     }
 }

@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 abstract class BaseFragment(val requestManager: RequestManager) : Fragment() {
 
     protected var cornerRadius: Int = 5
+    protected lateinit var viewModel: BaseViewModel
 
     abstract fun subscribeObservers()
 
