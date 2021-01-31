@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.andrewbutch.androiddevelopertinkofffintech2021.api.NetworkPost
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.math.max
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -17,6 +18,9 @@ abstract class BaseViewModel : ViewModel() {
 
     private val _post = MutableLiveData<NetworkPost>()
     val post: LiveData<NetworkPost> = _post
+
+    private val _page = MutableLiveData<Int>(0)
+    val page: LiveData<Int> = _page
 
 
     protected suspend fun setLoading(isLoading: Boolean) {
@@ -34,6 +38,24 @@ abstract class BaseViewModel : ViewModel() {
     protected suspend fun setError(msg: String) {
         withContext(Dispatchers.Main) {
             _error.value = msg
+        }
+    }
+
+    protected suspend fun increasePage() {
+        withContext(Dispatchers.Main) {
+            val currentPage = _page.value
+            currentPage?.let {
+                _page.value = it + 1
+            }
+        }
+    }
+
+    protected suspend fun decreasePage() {
+        withContext(Dispatchers.Main) {
+            val currentPage = _page.value
+            currentPage?.let {
+                _page.value = max(0, it - 1)
+            }
         }
     }
 

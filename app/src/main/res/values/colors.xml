@@ -5,4 +5,7 @@
     <color name="colorAccent">#0091EA</color>
     <color name="toolbarText">#000000</color>
     <color name="tabText">#000000</color>
+    <color name="btnPrevDisabled">#686868</color>
+    <color name="btnPrevEnabled">#FFD600</color>
+    <color name="btnNextEnabled">#64DD17</color>
 </resources>

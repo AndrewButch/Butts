@@ -32,11 +32,35 @@ class LatestPostsViewModel : BaseViewModel() {
                 }
             }
             setLoading(false)
+            increasePage()
         }
 
     }
 
     override fun getPreviousPost() {
-        TODO("Not yet implemented")
+        CoroutineScope(Dispatchers.IO).launch {
+            setLoading(true)
+            val rawResponse = ApiBuilder.getService().randomPost().awaitResponse()
+            val apiResponse = ApiResponse.create(rawResponse)
+            when (apiResponse) {
+                is ApiSuccessResponse -> {
+                    // get data from ApiResponse
+                    val networkPost = apiResponse.body
+                    // save data into local database
+
+                    // get updated data from database
+
+                    // return success
+                    setPost(networkPost)
+                }
+                is ApiEmptyResponse -> {
+                }
+                is ApiErrorResponse -> {
+                    setError(apiResponse.errorMessage)
+                }
+            }
+            setLoading(false)
+            decreasePage()
+        }
     }
 }
